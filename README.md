@@ -1,2 +1,5 @@
-# SubstanceUseTrackApp
-My Console App for monitoring users Substance Use.
+# Substance Use Tracker
+
+Substance Use Tracker is my first personal project written in C#
+
+Currently in progress.
