@@ -1,9 +1,8 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.Design;
+using System.Globalization;
 using Spectre.Console;
 
 namespace SubstanceUseTrackApp_Console;
-
-
 
 class SubstanceUseTracker
 {
@@ -16,5 +15,14 @@ class SubstanceUseTracker
     private const string REPORT_ABOUT_RECORD = "Write a report about your mood, feelings and impacts on you.";
     private const string EXIT = "Close Application.";
 
+    private const string connectionString = "Data Source=SubstanceUserLogs.data.db";
+
     private DataService _dataService;
+    public SubstanceUseTracker(DataService dataService)
+    {
+        _dataService = dataService;
+    }
+
+
+    
 }
