@@ -15,7 +15,7 @@ class SubstanceUseTracker
     private const string REPORT_ABOUT_RECORD = "Write a report about your mood, feelings and impacts on you.";
     private const string EXIT = "Close Application.";
 
-    private const string connectionString = "Data Source=SubstanceUserLogs.data.db";
+    private const string connectionString = @"Data Source=SubstanceUserLogs.data.db";
 
     private DataService _dataService;
     public SubstanceUseTracker(DataService dataService)
@@ -23,6 +23,30 @@ class SubstanceUseTracker
         _dataService = dataService;
     }
 
+    public void startApp()
+    {
+        while (true)
+        {
+            Menu();
+        }
+    }
 
-    
+    private void Menu()
+    {
+        AnsiConsole.Clear();
+
+        List<string> menuOperations = new List<string>
+        {
+            VIEW_SUBSTANCE_USE_RECORDS,
+            ADD_SUBSTANCE_USAGE,
+            CHANGE_SUBSTANCE_USE_RECORDS,
+            DELETE_RECORDS_OF_SUBSTANCE_USE,
+            REPORT_ABOUT_RECORD, EXIT,
+        };
+
+        var selectedOpMenu = AnsiConsole.Prompt(new SelectionPrompt<string>()
+            .Title()
+            .AddChoices
+            );
+    }
 }
