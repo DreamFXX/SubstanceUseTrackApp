@@ -19,7 +19,7 @@ class SubstanceUseApp
         _databaseManager = databaseManager;
     }
 
-    public void appStart()
+    public static void AppStart()
     {
         while (true)
         {
@@ -27,7 +27,7 @@ class SubstanceUseApp
         }
     }
 
-    private void MainMenu()
+    private static void MainMenu()
     {
         AnsiConsole.Clear();
 
@@ -42,13 +42,20 @@ class SubstanceUseApp
             EXIT,
         };
 
+        AnsiConsole.MarkupLine("[red]Hey![/]"); //Implement logging service.
+        Console.ReadLine();
+
         var menuSelection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-            .Title<string>("[underline]Welcome in [gold]Substance Usage Tracker![/][/]\n -[grey]Log your consumption of mind-altering Substances![/]\n\n [underline gold]--MAIN MENU--[/]")
+            .Title<string>("[underline]Welcome in [yellow]Substance Usage Tracker![/][/]\n -[grey]Log your consumption of mind-altering Substances![/]\n\n [underline yellow]--MAIN MENU--[/]")
             .PageSize(6)
             .MoreChoicesText("[grey](Move up and down with arrows to reveal more options.)[/]")
             .AddChoices(menuOperations)
             );
+    }
+
+    internal static void MenuRouterTo()
+    {
 
     }
 }

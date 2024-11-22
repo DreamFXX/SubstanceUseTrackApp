@@ -11,7 +11,7 @@ class DatabaseManager
     public DatabaseManager(string connectionString)
     {
         _connectionString = connectionString;
-        // SqlMapper.AddTypeHandler(new TimeSpanHandler());
+        
     }
 
 
