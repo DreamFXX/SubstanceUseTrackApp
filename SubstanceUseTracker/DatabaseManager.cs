@@ -1,6 +1,8 @@
 ﻿using System.Data;
+using System.Data.SQLite;
+using Dapper;
 
-public class DatabaseManager
+class DatabaseManager
 {
 
 }
