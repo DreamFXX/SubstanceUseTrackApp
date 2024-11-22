@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SubstanceUseTracker": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\marti\\_SubstanceUseTracker\\SubstanceUseTrackApp\\SubstanceUseTracker",
+      "nativeDebugging": true,
+      "sqlDebugging": true
+    }
+  }
+}

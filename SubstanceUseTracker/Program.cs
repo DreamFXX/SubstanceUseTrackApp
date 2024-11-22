@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 
 var builder = new ConfigurationBuilder().
     AddJsonFile("appsettings.json").
@@ -9,7 +8,7 @@ var builder = new ConfigurationBuilder().
 string connectionString = @"Data Source = substanceLogs.Data.db";
 
 DatabaseManager databaseManager = new DatabaseManager(connectionString);
-SubstanceUseApp substanceUseApp = new SubstanceUseApp(DatabaseManager);
+SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
 try
 {
     substanceUseApp.appStart();

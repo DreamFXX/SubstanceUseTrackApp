@@ -32,7 +32,7 @@ class SubstanceUseApp
     {
         AnsiConsole.Clear();
 
-        List<string> operationsList = new List<string>
+        List<string> menuOperations = new List<string>
         {
             VIEW_SUBSTANCE_USE_RECORDS,
             ADD_SUBSTANCE_USAGE,
@@ -43,11 +43,12 @@ class SubstanceUseApp
             EXIT,
         };
 
-        var menuSelection = AnsiConsole.Prompt(new SelectionPrompt<string>()
-            .Title<string>("Substance use tracker")
-            
-            
-            
+        var menuSelection = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+            .Title<string>("[underline]Welcome in [gold]Substance Usage Tracker![/][/]\n -[grey]Log your consumption of mind-altering Substances![/]\n\n [underline gold]--MAIN MENU--[/]")
+            .PageSize(6)
+            .MoreChoicesText("[grey](Move up and down with arrows to reveal more options.)[/]")
+            .AddChoices(menuOperations)
             );
     }
 }
