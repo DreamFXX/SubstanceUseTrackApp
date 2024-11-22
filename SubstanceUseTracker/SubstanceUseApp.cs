@@ -12,7 +12,7 @@ class SubstanceUseApp
     private const string EXIT = "Close Application.";
 
     // Implement into appsettings.json Config file!
-    private const string connectionString = @"Data Source=SubstanceUserLogs.data.db";
+    private const string connectionString = @"substanceUsage.data.db";
 
     private DatabaseManager _databaseManager;
     public SubstanceUseApp(DatabaseManager databaseManager)
