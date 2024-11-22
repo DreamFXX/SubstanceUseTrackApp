@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "SubstanceUseTrackApp-Console": {
-      "commandName": "Project",
-      "workingDirectory": "C:\\Users\\marti\\_SubstanceUseTracker\\SubstanceUseTrackApp\\SubstanceUseTrackApp-Console"
-    }
-  }
-}
