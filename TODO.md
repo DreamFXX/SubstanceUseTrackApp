@@ -1,7 +1,7 @@
 # Substance Usage Tracker App
 My first personal project in progress,  using SQLite database, Dapper, MS.Extensions.Configuration -> for connectionStrings. Written in C#.
 
-### My vision of this App
+### My vision // Tasks to do
 - [ ] Create Models folder with model of Substance Type Habits.
   - [ ] Create the model of SubstanceHabit with attributes -> Id, SubstanceTaken, DateAndTime, DoseQuantity and DoseUnits.
 - [ ] Write and implement references to each operation displayed on the menu.
