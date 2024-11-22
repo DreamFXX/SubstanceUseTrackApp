@@ -2,7 +2,11 @@
 
 namespace SubstanceUseTracker.Models
 {
-    internal class SubstanceHabit
+    class SubstanceHabit
     {
+        public int Id { get; set; },
+        public string Name { get; set; },
+        public string lastDoseAmount { get; set; }
+        
     }
 }

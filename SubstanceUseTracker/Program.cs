@@ -17,7 +17,7 @@ DatabaseManager databaseManager = new DatabaseManager(connectionString);
 SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
 try
 {
-    SubstanceUseApp.AppStart();
+    
 
 }
 catch (Exception e)

@@ -6,6 +6,7 @@ class SubstanceUseApp
     private const string VIEW_SUBSTANCE_USE_RECORDS = "View all Substance records.";
     private const string ADD_SUBSTANCE_USAGE = "Add a record about Substance use.";
     private const string REPORT_ABOUT_RECORD = "Write a report about your mood, feelings and impacts on you.";
+
     private const string CHANGE_SUBSTANCE_USE_RECORDS = "Change records about Substance usage";
 
     private const string DELETE_RECORDS_OF_SUBSTANCE_USE = "Delete parts of already logged Substance usage.";
@@ -19,7 +20,7 @@ class SubstanceUseApp
         _databaseManager = databaseManager;
     }
 
-    public static void AppStart()
+    public void AppStart()
     {
         while (true)
         {
@@ -27,7 +28,7 @@ class SubstanceUseApp
         }
     }
 
-    private static void MainMenu()
+    private void MainMenu()
     {
         AnsiConsole.Clear();
 
@@ -52,10 +53,68 @@ class SubstanceUseApp
             .MoreChoicesText("[grey](Move up and down with arrows to reveal more options.)[/]")
             .AddChoices(menuOperations)
             );
+        try
+        {
+            MenuRouter(menuSelection);
+        }
+        catch (Exception e)
+        {
+            AnsiConsole.MarkupLine($"[red]Error: {e.Message}[/]");
+            Console.ReadKey();
+        }
     }
 
-    internal static void MenuRouterTo()
+    private void MenuRouter(string menuSelection)
     {
+        switch (menuSelection)
+        {
+            case ADD_SUBSTANCE_USAGE:
+                AddSubstanceUsage();
+                break;
+            case VIEW_SUBSTANCE_USE_RECORDS:
+                ViewSubstanceUseRecords();
+                break;
+            case REPORT_ABOUT_RECORD:
+                CreateReportOfRecord();
+                break;
 
+            case CHANGE_SUBSTANCE_USE_RECORDS:
+                ChangeSubstanceUseRecord();
+                break;
+            case DELETE_RECORDS_OF_SUBSTANCE_USE:
+                DeleteSubstanceUseRecords();
+                break;
+
+            case EXIT:
+                AnsiConsole.MarkupLine("Stay safe!");
+                Environment.Exit(0);
+                break;
+        }
     }
+
+    private static void AddSubstanceUsage()
+    {
+        
+    }
+
+    private static void ViewSubstanceUseRecords()
+    {
+        
+    }
+
+    private static void CreateReportOfRecord()
+    {
+        
+    }
+
+    private static void ChangeSubstanceUseRecord()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void DeleteSubstanceUseRecords()
+    {
+        throw new NotImplementedException();
+    }
+
 }
