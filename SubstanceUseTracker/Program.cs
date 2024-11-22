@@ -1,12 +1,21 @@
-﻿// This is the main program file for the CodingTracker application. It contains the main method that is called when the application is run.
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 
 var builder = new ConfigurationBuilder().
-    AddJsonFile("Data Source = appsettings.json").
+    AddJsonFile("appsettings.json").
     SetBasePath(Directory.GetCurrentDirectory()).
     Build();
 
+string connectionString = @"Data Source = substanceLogs.Data.db";
 
+DatabaseManager databaseManager = new DatabaseManager(connectionString);
+SubstanceUseApp substanceUseApp = new SubstanceUseApp(DatabaseManager);
+try
+{
+    substanceUseApp.appStart();
 
-DatabaseManager _databaseManager = new DatabaseManager(connectionString);
-SubstanceUseApp _substanceUseApp = new SubstanceUseApp(DatabaseManager);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}

@@ -43,6 +43,11 @@ class SubstanceUseApp
             EXIT,
         };
 
-        var menuSelection = AnsiConsole.Prompt();
+        var menuSelection = AnsiConsole.Prompt(new SelectionPrompt<string>()
+            .Title<string>("Substance use tracker")
+            
+            
+            
+            );
     }
 }
