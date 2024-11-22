@@ -11,8 +11,7 @@ class SubstanceUseApp
     private const string DELETE_RECORDS_OF_SUBSTANCE_USE = "Delete parts of already logged Substance usage.";
     private const string EXIT = "Close Application.";
 
-    // Implement into appsettings.json Config file!
-    private const string connectionString = @"substanceUsage.data.db";
+    private const string connectionString = "";
 
     private DatabaseManager _databaseManager;
     public SubstanceUseApp(DatabaseManager databaseManager)
@@ -24,11 +23,11 @@ class SubstanceUseApp
     {
         while (true)
         {
-            mainMenu();
+            MainMenu();
         }
     }
 
-    private void mainMenu()
+    private void MainMenu()
     {
         AnsiConsole.Clear();
 
@@ -50,5 +49,6 @@ class SubstanceUseApp
             .MoreChoicesText("[grey](Move up and down with arrows to reveal more options.)[/]")
             .AddChoices(menuOperations)
             );
+
     }
 }

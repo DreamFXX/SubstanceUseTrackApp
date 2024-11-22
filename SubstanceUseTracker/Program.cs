@@ -1,16 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using System.Security.Cryptography.X509Certificates;
 
-var builder = new ConfigurationBuilder().
-    AddJsonFile("appsettings.json").
-    SetBasePath(Directory.GetCurrentDirectory()).
+IConfigurationRoot configurationBuilder = new ConfigurationBuilder().
+    AddEnvironmentVariables().
     Build();
 
-//string connectionString = @"substanceUsage.data.db";
-string connectionString0 = builder.GetConnectionString("DefaultConnection");
+string connectionString = configurationBuilder.GetValue<string>("connectionString") ?? "";
 
-DatabaseManager databaseManager = new DatabaseManager(connectionString0);
+DatabaseManager databaseManager = new DatabaseManager(connectionString);
 SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
 
 Console.ReadKey();

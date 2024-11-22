@@ -1,6 +1,9 @@
-﻿using System.Data;
-using System.Data.SQLite;
+﻿using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using Microsoft.Extensions.Configuration;
+using System.Data;
+using Microsoft.Data.Sqlite;
 using Dapper;
+using Z.Dapper.Plus;
 
 class DatabaseManager
 {
@@ -8,7 +11,7 @@ class DatabaseManager
     public DatabaseManager(string connectionString)
     {
         _connectionString = connectionString;
-        // ! -> SqlMapper.AddTypeHandler(new TimeSpanHandler());
+        // SqlMapper.AddTypeHandler(new TimeSpanHandler());
     }
 
 

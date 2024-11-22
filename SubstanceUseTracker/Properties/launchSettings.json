@@ -3,8 +3,12 @@
     "SubstanceUseTracker": {
       "commandName": "Project",
       "workingDirectory": "C:\\Users\\marti\\_SubstanceUseTracker\\SubstanceUseTrackApp\\SubstanceUseTracker",
+      "environmentVariables": {
+        "connectionString": "\"Data Source=SubstanceLogs.db;Cache=Shared\""
+      },
       "nativeDebugging": true,
-      "sqlDebugging": true
+      "sqlDebugging": true,
+      "remoteDebugEnabled": false
     }
   }
 }
