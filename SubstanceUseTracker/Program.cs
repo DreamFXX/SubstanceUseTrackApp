@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.Configuration.Json;
 
-
-
 IConfigurationRoot configurationBuilder = new ConfigurationBuilder()
     .AddJsonFile("Properties\\launchSettings.json")
     .AddEnvironmentVariables()
