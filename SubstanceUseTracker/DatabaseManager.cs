@@ -12,16 +12,35 @@ class DatabaseManager
 
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-
-            connection.Execute(@"CREATE TABLE IF NOT EXISTS database (
+            connection.Open();
+            connection.Execute(@"CREATE TABLE IF NOT EXISTS substance_usage_datatables (
                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                               Substance TEXT,
-                               DoseAmount TEXT,
-                               Unit TEXT,
-                               DateTime TEXT
+                               Substance TEXT NOT NULL,
+                               DoseAmount REAL NOT NULL,
+                               Unit TEXT NOT NULL,
+                               DateTime TEXT NOT NULL
                                )");
 
+            // Secondary table implementation for Usage Stats/Average consumptions ETC.
+            // connection.Execute(@"CREATE TABLE IF NOT EXISTS secondaryUsageData ()");
+            // OR just this table?
         }
     }
+
+    public Substance CreateSubstanceLog(Substance session)
+    {
+        using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+        {
+            connection.Open();
+
+                   string sql = (@"INSERT INTO substance_usage_data (
+                                 SubstanceName, DoseAmount, Unit, DateTime) 
+                        VALUES (@SubstanceName, @DoseAmount, @Unit, @DateTime)
+                                ");
+
+            connection.Execute(sql, session);
+        }
+    }
+
 }
 
