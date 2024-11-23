@@ -41,12 +41,10 @@ class SubstanceUseApp
             EXIT,
         };
 
-        AnsiConsole.MarkupLine("[red]Hey![/]"); //Implement logging service.
-
         var menuSelection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
             .Title<string>("[underline]Welcome in [yellow]Substance Usage Tracker![/][/]\n -[grey]Log your consumption of mind-altering Substances![/]\n\n [underline yellow]--MAIN MENU--[/]")
-            .PageSize(6)
+            .PageSize(10)
             .MoreChoicesText("[grey](Move up and down with arrows to reveal more options.)[/]")
             .AddChoices(menuOperations)
             );
