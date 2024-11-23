@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.FileProviders.Internal;
+﻿using System.Data;
+using System.Data.SQLite;
 using Dapper;
-using Z.Dapper.Plus;
 
 class DatabaseManager
 {
@@ -10,18 +10,16 @@ class DatabaseManager
         
         _connectionString = connectionString;
 
-        using (SqliteConnection connection = new SqliteConnection(_connectionString))
+        using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-            connection.Open();
 
-            connection.Execute(
-                @"CREATE TABLE IF NOT EXISTS SubstanceHabitData(
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Substance TEXT NOT NULL,
-                DoseAmount DECIMAL(5,1),
-                Unit TEXT NOT NULL,
-                Date&Time TEXT NOT NULL,
-                TotalAmountPerDay DECIMAL(5,1)");
+            connection.Execute(@"CREATE TABLE IF NOT EXISTS database (
+                               Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               Substance TEXT,
+                               DoseAmount TEXT,
+                               Unit TEXT,
+                               DateTime TEXT
+                               )");
 
         }
     }

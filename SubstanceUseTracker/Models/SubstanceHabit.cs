@@ -1,4 +1,4 @@
-﻿
+﻿using SubstanceUseTracker;
 
 namespace SubstanceUseTracker.Models;
 

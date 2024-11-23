@@ -4,7 +4,7 @@
       "commandName": "Project",
       "workingDirectory": "C:\\Users\\marti\\_SubstanceUseTracker\\SubstanceUseTrackApp\\SubstanceUseTracker",
       "environmentVariables": {
-        "connectionString": "\"Data Source=SubstanceUsage.db\""
+        "connectionString": "Data Source=substance_usage.db"
       },
       "sqlDebugging": true
     }
