@@ -26,8 +26,24 @@ class DatabaseManager
             // OR just this table?
         }
     }
+    //2nd mthd
+    void initSubstanceTable(SQLiteConnection connection)
+    {
+        _connectionString = connectionString;
 
-    public Substance CreateSubstanceLog(Substance session)
+        using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+        {
+            connection.Open();
+            connection.Execute(@"CREATE TABLE IF NOT EXISTS substance_usage_datatables (
+                               Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               Substance TEXT NOT NULL,
+                               DoseAmount REAL NOT NULL,
+                               Unit TEXT NOT NULL,
+                               DateTime TEXT NOT NULL
+                               )");
+        }
+
+    public Substance AddSubstanceLog(Substance specHabit)
     {
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
@@ -38,7 +54,7 @@ class DatabaseManager
                         VALUES (@SubstanceName, @DoseAmount, @Unit, @DateTime)
                                 ");
 
-            connection.Execute(sql, session);
+            connection.Execute(sql, specHabit);
         }
     }
 

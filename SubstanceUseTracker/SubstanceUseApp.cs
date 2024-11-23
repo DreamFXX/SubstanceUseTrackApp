@@ -64,7 +64,7 @@ class SubstanceUseApp
         switch (menuSelection)
         {
             case ADD_SUBSTANCE_USAGE:
-                AddSubstanceUsage();
+                AddSubstanceLog();
                 break;
             case VIEW_SUBSTANCE_USE_RECORDS:
                 ViewSubstanceUseRecords();
@@ -87,7 +87,7 @@ class SubstanceUseApp
         }
     }
 
-    private static void AddSubstanceUsage()
+    private static void AddSubstanceLog()
     {
         throw new NotImplementedException();
     }
