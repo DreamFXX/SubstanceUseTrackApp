@@ -9,6 +9,7 @@ IConfigurationRoot configurationBuilder = new ConfigurationBuilder()
 
 string connectionString = configurationBuilder.GetValue<string>("connectionString") ?? "";
 
+
 DatabaseManager databaseManager = new DatabaseManager(connectionString);
 SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
 try
