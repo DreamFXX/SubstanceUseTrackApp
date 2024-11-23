@@ -12,8 +12,6 @@ class SubstanceUseApp
     private const string DELETE_RECORDS_OF_SUBSTANCE_USE = "Delete parts of already logged Substance usage.";
     private const string EXIT = "Close Application.";
 
-    private const string connectionString = "";
-
     private DatabaseManager _databaseManager;
     public SubstanceUseApp(DatabaseManager databaseManager)
     {
@@ -44,7 +42,6 @@ class SubstanceUseApp
         };
 
         AnsiConsole.MarkupLine("[red]Hey![/]"); //Implement logging service.
-        Console.ReadLine();
 
         var menuSelection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -94,17 +91,17 @@ class SubstanceUseApp
 
     private static void AddSubstanceUsage()
     {
-        
+        throw new NotImplementedException();
     }
 
     private static void ViewSubstanceUseRecords()
     {
-        
+        throw new NotImplementedException();
     }
 
     private static void CreateReportOfRecord()
     {
-        
+        throw new NotImplementedException();
     }
 
     private static void ChangeSubstanceUseRecord()
