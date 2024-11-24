@@ -1,5 +1,9 @@
 ﻿using System.Globalization;
 using Spectre.Console;
+using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Data.Common;
+using System.Runtime;
 
 class SubstanceUseApp
 {
@@ -13,9 +17,13 @@ class SubstanceUseApp
     private const string EXIT = "Close Application.";
 
     private DatabaseManager _databaseManager;
+    private View _view;
+
     public SubstanceUseApp(DatabaseManager databaseManager)
     {
         _databaseManager = databaseManager;
+        _view = new View();
+        databaseManager.LoadSubstances().ForEach(substance => _view.Substance(substance));
     }
 
     public void AppStart()
@@ -58,8 +66,7 @@ class SubstanceUseApp
             Console.ReadKey();
         }
     }
-
-    private void MenuRouter(string menuSelection)
+    private void MenuRouter(string menuSelection) // zAČÍT ZDE!
     {
         switch (menuSelection)
         {
@@ -86,6 +93,31 @@ class SubstanceUseApp
                 break;
         }
     }
+
+    Substance CreateSubstance()
+    {
+        (string substanceName, double doseAmount, string unit, DateTime dateAndTime) = _view.SubstanceCreation();
+
+        if (substanceName == "" || unit == "")
+        {
+            throw new Exception("You forgot to enter all required values.");
+        }
+        Substance substance = _databaseManager.CreateSubstance(substanceName, doseAmount, unit, dateAndTime);
+        _view.Message("Substance Created!");
+        return substance;
+    }
+
+    Substance GetHabit(int id)
+    {
+        Substance substance = _databaseManager.LoadSubstance(id) ?? throw new Exception("Tracking of entered Substance not found");
+        return substance;
+    }
+
+    List<Substance> GetSubstances()
+    {
+        return _databaseManager.LoadSubstances();
+    }
+
 
     private void AddSubstanceLog()
     {

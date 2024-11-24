@@ -9,7 +9,7 @@
         this.DateTime = @DateTime;
     }
 
-    public int Id { get; set; } // Get primary Key from Main table
+    public int Id { get; } // Get primary Key from Main table
     public string SubstanceName { get; set; }
 
     public double DoseAmount { get; set; }

@@ -32,7 +32,7 @@ public class DatabaseManager
             );
     }
 
-    public Substance CreateSubstanceRecord(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
+    public Substance CreateSubstance(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
@@ -59,7 +59,7 @@ public class DatabaseManager
         return new Substance((int)id, (string)SubstanceName, (double)DoseAmount, (string)Unit, (DateTime)DateTime);
     }
 
-    public Substance? LoadSpecSubstanceUsage(int id)
+    public Substance? LoadSubstance(int id)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
@@ -72,24 +72,23 @@ public class DatabaseManager
         command.Parameters.AddWithValue("$Id", id);
 
         using var reader = command.ExecuteReader();
+
         if (!reader.Read())
         {
             return null;
         }
 
         return new Substance
-            (
-
-            reader.GetInt32(0),
-            reader.GetString(1),
-            reader.GetDouble(2),
-            reader.GetString(3),
-            reader.GetDateTime(4)
-            );
-
+                            (
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetDouble(2),
+                            reader.GetString(3),
+                            reader.GetDateTime(4)
+                            );
     }
 
-    public List<Substance> LoadAllSubstancesUsage()
+    public List<Substance> LoadSubstances()
     {
         using var connection = new SQLiteConnection(_connectionString);
         connection.Open();
@@ -104,15 +103,14 @@ public class DatabaseManager
         while (reader.Read())
         {
             substances.Add(new Substance
-                (
-                reader.GetInt32(0),
-                reader.GetString(1),
-                reader.GetDouble(2),
-                reader.GetString(3),
-                reader.GetDateTime(4)
-                ));
+            (
+            reader.GetInt32(0),
+            reader.GetString(1),
+            reader.GetDouble(2),
+            reader.GetString(3),
+            reader.GetDateTime(4)
+            ));
         }
-
         return substances;
     }
     
