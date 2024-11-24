@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.Configuration.Json;
+using Spectre.Console;
 
 IConfigurationRoot configurationBuilder = new ConfigurationBuilder()
     .AddJsonFile("Properties\\launchSettings.json")
@@ -8,7 +9,6 @@ IConfigurationRoot configurationBuilder = new ConfigurationBuilder()
     .Build();
 
 string connectionString = configurationBuilder.GetValue<string>("connectionString") ?? "";
-
 
 DatabaseManager databaseManager = new DatabaseManager(connectionString);
 SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
@@ -20,7 +20,7 @@ try
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    AnsiConsole.WriteException(e);
 }
 
 Console.ReadKey();

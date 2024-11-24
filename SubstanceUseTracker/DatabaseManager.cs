@@ -25,26 +25,25 @@ public class DatabaseManager
             @"CREATE TABLE IF NOT EXISTS Substances_Data (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Substance TEXT NOT NULL,
-                DoseAmount REAL NOT NULL,
+                Dosage REAL NOT NULL,
                 Unit TEXT NOT NULL,
                 DateTime TEXT NOT NULL
             )"
             );
     }
 
-    public Substance CreateSubstance(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
+    public Substance CreateSubstance(string SubstanceName, double DoseAmount, string Unit, string DateTime)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"
-                               INSERT INTO Substances_Data (Name, Description, Amount, Unit)
-                               VALUES ($Name, $Description, $Amount, $Unit)
-                               SELECT last_insert_rowid();
+                               INSERT INTO Substances_Data (Substance, Dosage, Unit, DateTime)
+                               VALUES ($Substance, $Dosage, $Unit, $DateTime)
                                ";
         command.Parameters.AddWithValue("$SubstanceName", SubstanceName);
-        command.Parameters.AddWithValue("$DoseAmount", DoseAmount);
+        command.Parameters.AddWithValue("$Dosage", DoseAmount);
         command.Parameters.AddWithValue("$Unit", Unit);
         command.Parameters.AddWithValue("$DateTime", DateTime);
         var id = command.ExecuteScalar();
@@ -56,7 +55,8 @@ public class DatabaseManager
 
         command.ExecuteNonQuery();
 
-        return new Substance((int)id, (string)SubstanceName, (double)DoseAmount, (string)Unit, (DateTime)DateTime);
+        return new Substance((int)id, (string)SubstanceName, (double)Dose
+            Amount, (string)Unit, (string)DateTime);
     }
 
     public Substance? LoadSubstance(int id)
@@ -84,7 +84,7 @@ public class DatabaseManager
                             reader.GetString(1),
                             reader.GetDouble(2),
                             reader.GetString(3),
-                            reader.GetDateTime(4)
+                            reader.GetString(4)
                             );
     }
 
@@ -108,7 +108,7 @@ public class DatabaseManager
             reader.GetString(1),
             reader.GetDouble(2),
             reader.GetString(3),
-            reader.GetDateTime(4)
+            reader.GetString(4)
             ));
         }
         return substances;

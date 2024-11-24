@@ -1,6 +1,6 @@
 ﻿public class Substance
 {
-    public Substance(int Id, string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
+    public Substance(int Id, string SubstanceName, double DoseAmount, string Unit, string DateTime)
     {
         this.Id = @Id;
         this.SubstanceName = @SubstanceName;
@@ -15,5 +15,5 @@
     public double DoseAmount { get; set; }
     public string Unit { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public string DateTime { get; set; }
 }
