@@ -7,7 +7,7 @@
         "connectionString": "Data Source=databases\\Substances_Data.db"
       },
       "sqlDebugging": true,
-      "remoteDebugEnabled": true
+      "remoteDebugEnabled": false
     }
   }
 }

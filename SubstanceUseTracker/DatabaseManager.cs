@@ -1,17 +1,14 @@
 ﻿using System.Data.SQLite;
-using Dapper;
 using Spectre.Console;
-using System.ComponentModel;
-
-
+using Dapper;
 
 public class DatabaseManager
 {
     private string _connectionString;
 
-    public DatabaseManager (string connectionString)
+    public DatabaseManager(string connectionString)
     {
-        
+
         _connectionString = connectionString;
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
@@ -35,7 +32,7 @@ public class DatabaseManager
             );
     }
 
-    public Substance CreateSubstance_Db(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
+    public Substance CreateSubstanceRecord(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
@@ -45,7 +42,7 @@ public class DatabaseManager
                                INSERT INTO Substances_Data (Name, Description, Amount, Unit)
                                VALUES ($Name, $Description, $Amount, $Unit)
                                SELECT last_insert_rowid();
-                                ";
+                               ";
         command.Parameters.AddWithValue("$SubstanceName", SubstanceName);
         command.Parameters.AddWithValue("$DoseAmount", DoseAmount);
         command.Parameters.AddWithValue("$Unit", Unit);
@@ -54,15 +51,15 @@ public class DatabaseManager
 
         if (id == null)
         {
-            AnsiConsole.MarkupLine("[red]Malfunction! Check and repair your code. This entry wont be saved.[/]");
+            throw new Exception("Malfunction, check your program code and fix database system. This log won´t be saved.");
         }
 
         command.ExecuteNonQuery();
 
-        return new Substance((int)id, (string)SubstanceName, (double)DoseAmount, (string) Unit, (DateTime)DateTime);
+        return new Substance((int)id, (string)SubstanceName, (double)DoseAmount, (string)Unit, (DateTime)DateTime);
     }
 
-    public Substance? LoadUsage(int id)
+    public Substance? LoadSpecSubstanceUsage(int id)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
@@ -73,7 +70,7 @@ public class DatabaseManager
             SELECT * FROM Substances_Data WHERE Id = $Id;
         ";
         command.Parameters.AddWithValue("$Id", id);
-        
+
         using var reader = command.ExecuteReader();
         if (!reader.Read())
         {
@@ -89,6 +86,34 @@ public class DatabaseManager
             reader.GetString(3),
             reader.GetDateTime(4)
             );
-            
+
     }
+
+    public List<Substance> LoadAllSubstancesUsage()
+    {
+        using var connection = new SQLiteConnection(_connectionString);
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText =
+            @"SELECT * FROM Substances_Data
+             ";
+
+        using var reader = command.ExecuteReader();
+
+        var substances = new List<Substance>();
+        while (reader.Read())
+        {
+            substances.Add(new Substance
+                (
+                reader.GetInt32(0),
+                reader.GetString(1),
+                reader.GetDouble(2),
+                reader.GetString(3),
+                reader.GetDateTime(4)
+                ));
+        }
+
+        return substances;
+    }
+    
 }

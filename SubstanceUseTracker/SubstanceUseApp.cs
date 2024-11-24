@@ -89,7 +89,7 @@ class SubstanceUseApp
 
     private void AddSubstanceLog()
     {
-
+        throw new NotImplementedException();
     }
 
     private static void ViewSubstanceUseRecords()
