@@ -1,10 +1,9 @@
-﻿using System;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using Dapper;
-using Z.Dapper.Plus.DapperPlusExpressionMapper;
 using Spectre.Console;
 using System.ComponentModel;
-using System.Xml.Linq;
+
+
 
 public class DatabaseManager
 {
@@ -12,6 +11,7 @@ public class DatabaseManager
 
     public DatabaseManager (string connectionString)
     {
+        
         _connectionString = connectionString;
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
@@ -35,15 +35,14 @@ public class DatabaseManager
             );
     }
 
-    public Substance CreateSubstanceTable(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
+    public Substance CreateSubstance_Db(string SubstanceName, double DoseAmount, string Unit, DateTime DateTime)
     {
-         
-        using var connection = new SQLiteConnection(_connectionString);
+        using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"
-                               INSERT INTO SubstancesData (Name, Description, Amount, Unit)
+                               INSERT INTO Substances_Data (Name, Description, Amount, Unit)
                                VALUES ($Name, $Description, $Amount, $Unit)
                                SELECT last_insert_rowid();
                                 ";
@@ -61,5 +60,35 @@ public class DatabaseManager
         command.ExecuteNonQuery();
 
         return new Substance((int)id, (string)SubstanceName, (double)DoseAmount, (string) Unit, (DateTime)DateTime);
+    }
+
+    public Substance? LoadUsage(int id)
+    {
+        using SQLiteConnection connection = new SQLiteConnection(_connectionString);
+
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText =
+        @"
+            SELECT * FROM Substances_Data WHERE Id = $Id;
+        ";
+        command.Parameters.AddWithValue("$Id", id);
+        
+        using var reader = command.ExecuteReader();
+        if (!reader.Read())
+        {
+            return null;
+        }
+
+        return new Substance
+            (
+
+            reader.GetInt32(0),
+            reader.GetString(1),
+            reader.GetDouble(2),
+            reader.GetString(3),
+            reader.GetDateTime(4)
+            );
+            
     }
 }

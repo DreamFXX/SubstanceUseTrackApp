@@ -87,9 +87,9 @@ class SubstanceUseApp
         }
     }
 
-    private static void AddSubstanceLog()
+    private void AddSubstanceLog()
     {
-        throw new NotImplementedException();
+
     }
 
     private static void ViewSubstanceUseRecords()
