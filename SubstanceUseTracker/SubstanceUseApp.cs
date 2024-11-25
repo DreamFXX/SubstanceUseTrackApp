@@ -96,13 +96,12 @@ class SubstanceUseApp
         }
         
     }
-
+    // !!?? START!
     private void ViewUsageLogs()
     {
-        List<SubstanceType> substanceLogs = _databaseManager.LoadSubstances();
         AnsiConsole.Clear();
 
-        DisplaySubstancesLogs(substanceLogs);
+        
         AnsiConsole.MarkupLine("[yellow]Press any key to continue.[/]");
         Console.ReadKey();
     }
