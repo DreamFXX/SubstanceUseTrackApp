@@ -12,7 +12,6 @@ string connectionString = configurationBuilder.GetValue<string>("connectionStrin
 
 DatabaseManager databaseManager = new DatabaseManager(connectionString);
 SubstanceUseApp substanceUseApp = new SubstanceUseApp(databaseManager);
-View _view = new View();
 try
 {
     substanceUseApp.AppStart();

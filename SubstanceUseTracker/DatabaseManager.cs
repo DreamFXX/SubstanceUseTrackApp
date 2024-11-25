@@ -1,6 +1,6 @@
 ﻿using System.Data.SQLite;
-using Spectre.Console;
 using Dapper;
+using System.Data;
 
 public class DatabaseManager
 {
@@ -8,14 +8,10 @@ public class DatabaseManager
 
     public DatabaseManager(string connectionString)
     {
-
         _connectionString = connectionString;
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-            connection.Open();
-            InitSubstanceTable(connection);
-            AnsiConsole.MarkupLine($"[grey]- Sucessfully created: {_connectionString} database.[/]");
-            AnsiConsole.MarkupLine("");
+            SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
         }
     }
 
@@ -24,7 +20,7 @@ public class DatabaseManager
         connection.Execute(
             @"CREATE TABLE IF NOT EXISTS Substances_Data (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Substance TEXT NOT NULL,
+                SubstanceType TEXT NOT NULL,
                 Dosage REAL NOT NULL,
                 Unit TEXT NOT NULL,
                 DateTime TEXT NOT NULL
@@ -32,18 +28,18 @@ public class DatabaseManager
             );
     }
 
-    public Substance CreateSubstance(string SubstanceName, double DoseAmount, string Unit, string DateTime)
+    public SubstanceType CreateSubstance(string Substance, double Dosage, string Unit, string DateTime)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"
-                               INSERT INTO Substances_Data (Substance, Dosage, Unit, DateTime)
-                               VALUES ($Substance, $Dosage, $Unit, $DateTime)
+                               INSERT INTO Substances_Data (SubstanceType, Dosage, Unit, DateTime)
+                               VALUES (@SubstanceType, @Dosage, @Unit, @DateTime)
                                ";
-        command.Parameters.AddWithValue("$SubstanceName", SubstanceName);
-        command.Parameters.AddWithValue("$Dosage", DoseAmount);
+        command.Parameters.AddWithValue("$SubstanceType", Substance);
+        command.Parameters.AddWithValue("$Dosage", Dosage);
         command.Parameters.AddWithValue("$Unit", Unit);
         command.Parameters.AddWithValue("$DateTime", DateTime);
         var id = command.ExecuteScalar();
@@ -55,11 +51,10 @@ public class DatabaseManager
 
         command.ExecuteNonQuery();
 
-        return new Substance((int)id, (string)SubstanceName, (double)Dose
-            Amount, (string)Unit, (string)DateTime);
+        return new SubstanceType((int)id, (string)Substance, (double)Dosage, (string)Unit, (string)DateTime);
     }
 
-    public Substance? LoadSubstance(int id)
+    public SubstanceType? LoadSubstance(int id)
     {
         using SQLiteConnection connection = new SQLiteConnection(_connectionString);
 
@@ -78,7 +73,7 @@ public class DatabaseManager
             return null;
         }
 
-        return new Substance
+        return new SubstanceType
                             (
                             reader.GetInt32(0),
                             reader.GetString(1),
@@ -88,7 +83,7 @@ public class DatabaseManager
                             );
     }
 
-    public List<Substance> LoadSubstances()
+    public List<SubstanceType> LoadSubstances()
     {
         using var connection = new SQLiteConnection(_connectionString);
         connection.Open();
@@ -99,10 +94,10 @@ public class DatabaseManager
 
         using var reader = command.ExecuteReader();
 
-        var substances = new List<Substance>();
+        var substances = new List<SubstanceType>();
         while (reader.Read())
         {
-            substances.Add(new Substance
+            substances.Add(new SubstanceType
             (
             reader.GetInt32(0),
             reader.GetString(1),
@@ -113,5 +108,20 @@ public class DatabaseManager
         }
         return substances;
     }
-    
+
+    class DateTimeOffsetHandler : SqlMapper.TypeHandler<DateTimeOffset>
+    {
+        public override DateTimeOffset Parse(object value)
+        {
+            Console.WriteLine(value);
+            return DateTimeOffset.Parse((string)value);
+        }
+
+        public override void SetValue(IDbDataParameter parameter, DateTimeOffset value)
+        {
+            parameter.Value = value.LocalDateTime;
+        }
+    }
+
+
 }
