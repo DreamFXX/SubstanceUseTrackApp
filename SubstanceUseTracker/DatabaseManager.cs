@@ -13,7 +13,7 @@ class DatabaseManager
 
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-            connection.Execute("CREATE TABLE IF NOT EXISTS Substance_Data (Id INTEGER PRIMARY KEY AUTOINCREMENT, Substance TEXT, Dosage REAL, Unit TEXT, DateTime TEXT)");
+            connection.Execute("CREATE TABLE IF NOT EXISTS Substances_Data (Id INTEGER PRIMARY KEY AUTOINCREMENT, Substance TEXT, Dosage REAL, Unit TEXT, DateTime TEXT)");
         }
     }
 
@@ -21,8 +21,31 @@ class DatabaseManager
     {
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-            string sql = "INSERT INTO Substance_Data (Id, Substance, Dosage, Unit, DateTime) VALUES (@Id, @Substance, @Dosage, @Unit, @DateTime)";
+            string sql = "INSERT INTO Substances_Data (Id, Substance, Dosage, Unit, DateTime) VALUES (@Id, @Substance, @Dosage, @Unit, @DateTime)";
             connection.Execute(sql, substanceType);
+        }
+    }
+
+    public SubstanceType GetSubstanceType(int id) // int id? want to search by substanceType!
+    {
+        using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Substances_Data WHERE Substance = @Substance";
+            SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new { Id = id });
+            if (substanceType == null)
+            {
+                throw new Exception("Coding session not found");
+            }
+            return substanceType;
+        }
+    }
+
+    public List<SubstanceType> GetSubstancesList()
+    {
+        using(SQLiteConnection connection = new SQLiteConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Substances_Data ORDER BY Id DESC";
+            return connection.Query<SubstanceType>(sql).ToList();
         }
     }
 

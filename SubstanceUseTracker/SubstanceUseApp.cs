@@ -66,7 +66,7 @@ class SubstanceUseApp
         switch (menuSelection)
         {
             case VIEW_SUBSTANCE_USE_LOGS:
-                ViewUsageLogs();
+                
                 break;
             case CREATE_SUBSTANCE_LOG:
                 CreateSubstanceLog();
