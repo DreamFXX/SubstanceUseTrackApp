@@ -34,7 +34,7 @@ class SubstanceUseApp
 
         List<string> menuOperations = new List<string>
         {
-            VIEW_SUBSTANCE_USE_LOGS,
+            "WHERE -> find substanceType column",
             CREATE_SUBSTANCE_LOG,
 
             //CHANGE_SUBSTANCE_USE_LOGS,
@@ -65,8 +65,13 @@ class SubstanceUseApp
     {
         switch (menuSelection)
         {
-            case VIEW_SUBSTANCE_USE_LOGS:
-                
+            //case VIEW_SUBSTANCE_USE_LOGS:
+
+            //    break;
+            case "WHERE -> find substanceType column":
+                string test = Console.ReadLine();
+                _databaseManager.GetSubstanceType(test);
+
                 break;
             case CREATE_SUBSTANCE_LOG:
                 CreateSubstanceLog();

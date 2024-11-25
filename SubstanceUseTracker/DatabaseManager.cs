@@ -26,12 +26,16 @@ class DatabaseManager
         }
     }
 
-    public SubstanceType GetSubstanceType(int id) // int id? want to search by substanceType!
+
+
+    public SubstanceType GetSubstanceType(string Substance) // int id? want to search by substanceType!
     {
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
             string sql = "SELECT * FROM Substances_Data WHERE Substance = @Substance";
+
             SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new { Id = id });
+            // SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new {SubstanceType = substanceTypeFind });
             if (substanceType == null)
             {
                 throw new Exception("Coding session not found");
