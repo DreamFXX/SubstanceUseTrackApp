@@ -2,4 +2,4 @@
 
 Substance Use Tracker is my first personal project written in C#
 
-Currently in progress.
+Currently Im working on functional Console App, then I want to update/learn blazor .net
