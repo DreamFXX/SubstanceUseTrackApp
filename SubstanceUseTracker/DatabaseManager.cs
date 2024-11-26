@@ -26,15 +26,13 @@ class DatabaseManager
         }
     }
 
-
-
-    public SubstanceType GetSubstanceType(string Substance) // int id? want to search by substanceType!
+    public SubstanceType GetSubstanceType(string substance) // int id? want to search by substanceType!
     {
         using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
         {
-            string sql = "SELECT * FROM Substances_Data WHERE Substance = @Substance";
+            string sql = "SELECT * FROM Substances_Data WHERE Substance = @substance";
 
-            SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new { Id = id });
+            SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new { Substance = substance });
             // SubstanceType substanceType = connection.QueryFirstOrDefault<SubstanceType>(sql, new {SubstanceType = substanceTypeFind });
             if (substanceType == null)
             {
@@ -52,7 +50,6 @@ class DatabaseManager
             return connection.Query<SubstanceType>(sql).ToList();
         }
     }
-
 }
 
 class DateTimeHandler : SqlMapper.TypeHandler<DateTimeOffset>

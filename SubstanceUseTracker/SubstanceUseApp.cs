@@ -1,7 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System.Globalization;
-using System.Xml.Linq;
 
 class SubstanceUseApp
 {
@@ -34,7 +32,7 @@ class SubstanceUseApp
 
         List<string> menuOperations = new List<string>
         {
-            "WHERE -> find substanceType column",
+            VIEW_SUBSTANCE_USE_LOGS,
             CREATE_SUBSTANCE_LOG,
 
             //CHANGE_SUBSTANCE_USE_LOGS,
@@ -61,17 +59,13 @@ class SubstanceUseApp
             Console.ReadKey();
         }
     }
+
     private void MenuRouter(string menuSelection) // Začít zde!
     {
         switch (menuSelection)
         {
-            //case VIEW_SUBSTANCE_USE_LOGS:
-
-            //    break;
-            case "WHERE -> find substanceType column":
-                string test = Console.ReadLine();
-                _databaseManager.GetSubstanceType(test);
-
+            case VIEW_SUBSTANCE_USE_LOGS:
+                ViewSubstanceLogs();
                 break;
             case CREATE_SUBSTANCE_LOG:
                 CreateSubstanceLog();
@@ -92,11 +86,46 @@ class SubstanceUseApp
         }
     }
 
+    private void ViewSubstanceLogs()
+    {
+        List<SubstanceType> substanceTypes = _databaseManager.GetSubstancesList();
+        AnsiConsole.Clear(); //?
+
+
+        DisplaySubstanceTypes(substanceTypes);
+        AnsiConsole.MarkupLine("[yellow]Press any key to continue..[/]");
+        Console.ReadKey();
+    }
+
+    private void DisplaySubstanceTypes(List<SubstanceType> substanceTypes)
+    {
+        Table substanceLogsTable = new Table();
+        substanceLogsTable.Title(new TableTitle("Coding Sessions"));
+        substanceLogsTable.AddColumns("Id", "Substance", "Dosage in Units", "Date and Time");
+        substanceLogsTable.Columns[0].Width = 5;
+
+        foreach (SubstanceType substanceType in substanceTypes)
+        {
+            Markup[] columns =
+            [
+                new Markup(substanceType.Id.ToString()),
+                new Markup(substanceType.Substance),
+                new Markup($"{substanceType.Dosage.ToString() }{substanceType.Unit}"),
+                new Markup(substanceType.DateTime.ToString())
+            ];
+            substanceLogsTable.AddRow(columns);
+        }
+        AnsiConsole.Write(substanceLogsTable);
+        AnsiConsole.MarkupLine("[green]Substances logs and their data List.[/]");
+    }
+
+
     private void CreateSubstanceLog()
     {
         AnsiConsole.Clear();
         AnsiConsole.Markup("[bold yellow]You are creating your Substance Log![/]\n[green]Congratulations to your new healthier life.[/]");
         AnsiConsole.Markup("[yellow]\n\nNow, please enter specific information about your Substance Usage.[/]");
+
         string substance_Type = AnsiConsole.Prompt(new TextPrompt<string>("[purple]\nWhat Substance you want to log? Please, enter the Substance now.[/]"));
         double dosageInput = AnsiConsole.Prompt(new TextPrompt<double>("[red]\nWhat amount was your last dosage? Please type in just number, Units will be set soon.[/]"));
         string unitInput = AnsiConsole.Prompt(new TextPrompt<string>("[white]\nEnter a short symbol (ml, l, mg, g etc.) to specify units, which will be used to display your dosages[/]"));
